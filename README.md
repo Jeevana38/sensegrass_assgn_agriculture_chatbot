@@ -6,3 +6,5 @@ An agriculture bot developed using Python(Flask) and APIs
 3. Include OPENAI_API_KEY = "secret key" in the .env file
 4. Include .env in .gitignore file
 5. Run main.py
+
+[Link to the Deployed Agriculture Bot](https://jeevanakalvakuntla.pythonanywhere.com/)

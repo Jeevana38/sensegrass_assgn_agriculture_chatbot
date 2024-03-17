@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Agriculture Chatbot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+     <style>
+        .bottom-class{
+            width: 70%;
+            margin: 1% auto;
+        }
+        .userclass {
+            float: right;
+            clear: both;
+            font-size:20px;
+            background-color: #cce5ff;
+            padding: 5px;
+            max-width:50%;
+            border-radius: 10px;
+            margin-bottom: 5px;
+        }
+
+        /* Style for bot messages */
+        .botclass {
+            float: left;
+            clear: both;
+            font-size:20px;
+            background-color: #f0f0f0;
+            padding: 5px;
+            max-width:60%;
+            border-radius: 10px;
+            margin-bottom: 5px;
+        }
+        .chat-container{
+            max-height:70vh; /* Set maximum height to 70% of viewport height */
+            overflow-y: auto; /* Allow vertical scrolling */
+        }
+
+    </style>
+</head>
+
+<body >
+  <div class="rounded container mt-4">
+      <div class="row">
+          <div class="col col-md-9">
+              <p style="font-weight:bold;text-align:left;">Agriculture ChatBot</p>
+          </div>
+          <div class="col col-md-auto">
+              <p style="font-weight:lighter;text-align:right;">Jeevana Kalvakuntla</p>
+          </div>
+      </div>
+  </div>
+  <div class="container mt-4">
+        <div class="row justify-content-md-center">
+            <div class="col-md-12 chat-container">
+                    <div id="chat-class"></div>
+            </div>
+            <div class="col-md-10 fixed-bottom bottom-class">
+                <div class="input-group ">
+                      <textarea class="form-control" aria-label="chattext" id="usermsg" placeholder="Enter your message"></textarea>
+                      <button class="btn btn-primary " onclick="send()" type="button" id="sendbutton">SEND</button>
+                </div>
+             </div>
+        </div>
+  </div>
+
+    <script type="text/javascript">
+        function send() {
+    var userMessage = document.getElementById("usermsg");
+    var userElement = document.createElement("div");
+    userElement.classList.add("userclass");
+    userElement.innerText = userMessage.value;
+    var chatElement = document.getElementById("chat-class");
+    chatElement.appendChild(userElement);
+
+     fetch('/messager', {
+         method: 'POST',
+         headers: {
+             'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({ message: userMessage.value })
+     })
+     .then(response => response.text())
+     .then(chatdata => {
+    var botElement = document.createElement("div");
+    botElement.classList.add("botclass");
+    botElement.innerText = chatdata;
+    chatElement.appendChild(botElement);
+    })
+     .catch(error => {
+         console.log(error);
+    });
+    userMessage.value = '';
+
+}
+    </script>
+</body>
+</html>
